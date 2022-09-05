@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,6 +24,6 @@ public class Order {
     private String orderQuantity;
 
     @OneToMany(targetEntity = Items.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "i_fk", referencedColumnName = "orderId")
-    private List<Items> orderedItems;
+    @JoinColumn(name = "io_fk", referencedColumnName = "orderId")
+    private List<Items> orderedItems = new ArrayList<>();
 }

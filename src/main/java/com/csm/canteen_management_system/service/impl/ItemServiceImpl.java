@@ -1,6 +1,7 @@
 package com.csm.canteen_management_system.service.impl;
 
 import com.csm.canteen_management_system.dto.ItemDto;
+import com.csm.canteen_management_system.exceptions.ResourceNotFoundException;
 import com.csm.canteen_management_system.model.Items;
 import com.csm.canteen_management_system.repo.ItemRepository;
 import com.csm.canteen_management_system.service.ItemService;
@@ -46,7 +47,7 @@ public class ItemServiceImpl implements ItemService {
 //        item1.setItemImage(itemDto.getItemImage());
 //        itemRepository.save(item1);
 
-        Items item = itemRepository.findById(id).orElseThrow(() -> new RuntimeException("Item not found."));
+        Items item = itemRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Item", "item Id", id));
         item.setItemName(itemDto.getItemName());
         item.setItemPrice(itemDto.getItemPrice());
         item.setItemImage(itemDto.getItemImage());
@@ -55,13 +56,13 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void deleteItem(Integer id) {
-        Items item = itemRepository.findById(id).orElseThrow(() -> new RuntimeException("Item not found."));
+        Items item = itemRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Item", "item Id", id));
         itemRepository.delete(item);
     }
 
     @Override
     public Items getItemById(Integer id) {
-        return itemRepository.findById(id).orElseThrow(() -> new RuntimeException("Item not found."));
+        return itemRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Item", "item Id", id));
     }
 
 }

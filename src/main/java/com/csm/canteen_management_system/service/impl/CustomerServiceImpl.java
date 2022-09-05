@@ -1,6 +1,7 @@
 package com.csm.canteen_management_system.service.impl;
 
 import com.csm.canteen_management_system.dto.CustomerDto;
+import com.csm.canteen_management_system.exceptions.ResourceNotFoundException;
 import com.csm.canteen_management_system.model.Customer;
 import com.csm.canteen_management_system.repo.CustomerRepository;
 import com.csm.canteen_management_system.service.CustomerService;
@@ -35,7 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void updateCustomer(Integer id, CustomerDto customerDto) {
-        Customer customer = customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Data not found"));
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer", "Customer Id", id));
         customer.setCustomerName(customerDto.getCustomerName());
         customer.setCustomerDepartment(customerDto.getCustomerDepartment());
         customer.setCustomerImage(customer.getCustomerImage());
@@ -44,12 +45,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteCustomer(Integer id) {
-        Customer customer = customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Data not found"));
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer", "Customer Id", id));
         customerRepository.delete(customer);
     }
 
     @Override
     public Customer getCustomerById(Integer id) {
-        return customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Data not found"));
+        return customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer", "Customer Id", id));
     }
 }

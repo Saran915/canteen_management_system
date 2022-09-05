@@ -1,14 +1,13 @@
 package com.csm.canteen_management_system.controller;
 
+import com.csm.canteen_management_system.dto.ApiResponse;
 import com.csm.canteen_management_system.dto.ItemDto;
 import com.csm.canteen_management_system.model.Items;
 import com.csm.canteen_management_system.service.ItemService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/item")
@@ -21,49 +20,37 @@ public class ItemController {
     }
 
     @PostMapping
-    private ResponseEntity<?> saveItem(@RequestBody ItemDto itemsDto) {
+    private ResponseEntity<ApiResponse> saveItem(@RequestBody ItemDto itemsDto) {
         itemservice.saveItem(itemsDto);
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", true);
-        response.put("message", "Item save successfully.");
-        return ResponseEntity.ok(response);
+        ApiResponse apiResponse = new ApiResponse("Item save successfully", true, null);
+        return ResponseEntity.ok(apiResponse);
     }
 
     @GetMapping
-    private ResponseEntity<?> getItem() {
+    private ResponseEntity<ApiResponse> getItem() {
         List<Items> itemList = itemservice.getItem();
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", true);
-        response.put("message", "Item List get successfully.");
-        response.put("data", itemList);
-        return ResponseEntity.ok(response);
+        ApiResponse apiResponse = new ApiResponse("Item list get successfully", true, itemList);
+        return ResponseEntity.ok(apiResponse);
     }
 
     @PutMapping("{id}")
-    private ResponseEntity<?> updateItem(@PathVariable Integer id, @RequestBody ItemDto itemDto) {
+    private ResponseEntity<ApiResponse> updateItem(@PathVariable Integer id, @RequestBody ItemDto itemDto) {
         itemservice.updateItem(id, itemDto);
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", true);
-        response.put("message", "Item updated successfully.");
-        return ResponseEntity.ok(response);
+        ApiResponse apiResponse = new ApiResponse("Item update successfully", true, null);
+        return ResponseEntity.ok(apiResponse);
     }
 
     @DeleteMapping("{id}")
-    private ResponseEntity<?> deleteItem(@PathVariable Integer id) {
+    private ResponseEntity<ApiResponse> deleteItem(@PathVariable Integer id) {
         itemservice.deleteItem(id);
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", true);
-        response.put("message", "Item delete successfully.");
-        return ResponseEntity.ok(response);
+        ApiResponse apiResponse = new ApiResponse("Item delete successfully", true, null);
+        return ResponseEntity.ok(apiResponse);
     }
 
     @GetMapping("{id}")
-    private ResponseEntity<?> getItemById(@PathVariable Integer id) {
+    private ResponseEntity<ApiResponse> getItemById(@PathVariable Integer id) {
         Items item = itemservice.getItemById(id);
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", true);
-        response.put("message", "Item get successfully.");
-        response.put("data", item);
-        return ResponseEntity.ok(response);
+        ApiResponse apiResponse = new ApiResponse("Item get successfully", true , item);
+        return ResponseEntity.ok(apiResponse);
     }
 }
